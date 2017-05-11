@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fuchen.academic.dao.UsersDao">
+	
+	<sql id="includes">
+		number,password,name,type,tel,email
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="type!=null and type!=''">
+				type=#{type}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="add">
+		insert into users(<include refid="includes"/>) values(#{number},#{password},#{name},#{type},#{tel},#{email});
+	</insert>
+	
+	<select id="validate" resultType="com.fuchen.academic.domain.Users">
+		select <include refid="includes"/> from users where name=#{name} and password=#{password}
+	</select>
+	
+	<select id="queryALL" resultType="com.fuchen.academic.domain.Users">
+		select <include refid="includes"/> from users;
+	</select>
+		
+	<update id="update">
+		update users set tel=#{tel},email=#{email} where number=#{number}
+	</update>
+	
+	<update id="passwd">
+		update users set password=#{password} where number=#{number}
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(0) from users <include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultType="com.fuchen.academic.domain.Users" >
+		select <include refid="includes"/> from users 
+		<include refid="dynamicWhere"/> limit #{start},#{pageSize} 
+	</select>
+</mapper>

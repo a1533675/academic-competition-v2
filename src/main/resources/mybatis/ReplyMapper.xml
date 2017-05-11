@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fuchen.academic.dao.ReplyDao">
+	
+	<resultMap type="com.fuchen.academic.domain.Reply" id="Reply">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="createTime"/>
+		<association property="users" column="userId" javaType="com.fuchen.academic.domain.Users">
+			<id property="number" column="number"/>
+			<result property="name" column="name"/>
+		</association>
+		<association property="topic" column="topicId" javaType="com.fuchen.academic.domain.Topic">
+			<id property="id" column="id"/>
+			<result property="title" column="title"/>
+		</association>
+	</resultMap>
+	
+	<sql id="select_includes">
+		r.id,r.content,r.createTime,u.number,u.name,t.id,t.title
+	</sql>
+	
+	<sql id="join">
+		left join topic t on t.id = r.topicId left join users u on u.number = r.userId 
+	</sql>
+	
+	<sql id="insert_includes">
+		id,topicId,userId,content
+	</sql>
+	
+	<sql id="order">
+		order by r.createTime asc
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="topicId!=null and topicId!=''">
+				topicId=#{topicId}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="add">
+		insert into reply(<include refid="insert_includes"/>) values(#{id},#{topic.id},#{users.number},#{content});
+	</insert>
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultMap="Reply" >
+		select <include refid="select_includes"/> from reply r <include refid="join"/> <include refid="dynamicWhere"/> <include refid="order"/> limit #{start},#{pageSize} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from reply <include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="queryById" resultMap="Reply">
+		select <include refid="select_includes"/> from reply r <include refid="join"/> where id=#{id} 
+	</select>
+	
+	<update id="batchDelete">
+	 delete from reply where id in 
+		<foreach collection="array" item="ids" open="(" separator="," close=")">
+    		#{ids}
+    	</foreach>
+	</update>
+	
+</mapper>

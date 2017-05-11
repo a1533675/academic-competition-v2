@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fuchen.academic.dao.NoticeDao">
+	
+	<sql id="select_includes">
+		id,title,content,attachmentUrl,createTime
+	</sql>
+	
+	<sql id="insert_includes">
+		id,title,content,attachmentUrl
+	</sql>
+	
+	<sql id="order">
+		order by createTime desc
+	</sql>
+	<insert id="add">
+		insert into notice(<include refid="insert_includes"/>) values(#{id},#{title},#{content},#{attachmentUrl});
+	</insert>
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultType="com.fuchen.academic.domain.Notice" >
+		select <include refid="select_includes"/> from notice <include refid="order"/> limit #{start},#{pageSize} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from notice
+	</select>
+	
+	<select id="queryById" resultType="com.fuchen.academic.domain.Notice" >
+		select <include refid="select_includes"/> from notice where id=#{id} 
+	</select>
+	
+	<update id="update">
+		update notice <trim prefix="set" suffixOverrides=",">
+			<if test="title!=null">
+				title=#{title},
+			</if>
+			<if test="content!=null">
+				content=#{content},
+			</if>
+			<if test="attachmentUrl!=null and attachmentUrl!=''">
+				attachmentUrl=#{attachmentUrl},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<update id="batchDelete">
+	 delete from notice where id in 
+		<foreach collection="array" item="ids" open="(" separator="," close=")">
+    		#{ids}
+    	</foreach>
+	</update>
+	
+</mapper>

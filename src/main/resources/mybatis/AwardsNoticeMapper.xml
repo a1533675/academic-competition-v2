@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fuchen.academic.dao.AwardsNoticeDao">
+	
+	<resultMap type="com.fuchen.academic.domain.AwardsNotice" id="AwardsNotice">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="attachmentUrl" column="attachmentUrl"/>
+		<result property="createTime" column="createTime"/>
+		<association property="publisher" column="publisherId" javaType="com.fuchen.academic.domain.Users">
+			<id property="number" column="number"/>
+			<result property="name" column="name"/>
+		</association>
+		<association property="competition" column="competitionId" javaType="com.fuchen.academic.domain.Competition">
+			<id property="id" column="id"/>
+			<result property="title" column="title"/>
+			<result property="content" column="content"/>
+			<result property="startTime" column="startTime"/>
+			<result property="endTime" column="endTime"/>
+		</association>
+	</resultMap>
+	
+	<sql id="select_includes">
+		m.id,m.title,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id,c.title,c.content,c.startTime,c.endTime
+	</sql>
+	
+	<sql id="insert_includes">
+		id,publisherId,competitionId,title,content,attachmentUrl
+	</sql>
+	
+	<sql id="join">
+		left join competition c on c.id = m.competitionId left join users p on p.number = m.publisherId 
+	</sql>
+	
+	<sql id="order">
+		order by m.createTime desc
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="competitionId!=null and competitionId!=''">
+				and c.id=#{competitionId}
+			</if>
+			<if test="number!= null and number!=''">
+				and p.number = #{number}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="add">
+		insert into awards_notice(<include refid="insert_includes"/>) values(#{id},#{publisher.number},#{competition.id},#{title},#{content},#{attachmentUrl});
+	</insert>
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultMap="AwardsNotice" >
+		select <include refid="select_includes"/> from awards_notice m <include refid="join"/> <include refid="dynamicWhere"/> <include refid="order"/> limit #{start},#{pageSize} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from awards_notice m <include refid="join"/> <include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="queryById" resultMap="AwardsNotice">
+		select <include refid="select_includes"/> from awards_notice m <include refid="join"/> where m.id=#{id} 
+	</select>
+	
+	<select id="queryByCompetition" resultMap="AwardsNotice">
+		select <include refid="select_includes"/> from awards_notice m <include refid="join"/> <include refid="dynamicWhere"/> 
+	</select>
+	
+	<update id="batchDelete">
+	 delete from awards_notice where id in 
+		<foreach collection="array" item="ids" open="(" separator="," close=")">
+    		#{ids}
+    	</foreach>
+	</update>
+	
+	<update id="update">
+		update awards_notice 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="title!=null">
+				title=#{title},
+			</if>
+			<if test="content!=null">
+				content=#{content},
+			</if>
+			<if test="attachmentUrl!=null and attachmentUrl!=''">
+				attachmentUrl=#{attachmentUrl}
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+</mapper>

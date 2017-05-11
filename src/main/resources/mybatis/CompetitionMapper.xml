@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fuchen.academic.dao.CompetitionDao">
+	
+	<resultMap type="com.fuchen.academic.domain.Competition" id="Competition">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="startTime" column="startTime"/>
+		<result property="endTime" column="endTime"/>
+		<result property="position" column="position"/>
+		<result property="attachmentUrl" column="attachmentUrl"/>
+		<result property="createTime" column="createTime"/>
+		<result property="finished" column="finished"/>
+		<association property="publisher" column="publisherId" javaType="com.fuchen.academic.domain.Users">
+			<id property="number" column="number"/>
+			<result property="name" column="name"/>
+		</association>
+	</resultMap>
+	
+	<sql id="select_includes">
+		id,title,content,startTime,endTime,position,attachmentUrl,createTime,finished,p.number,p.name
+	</sql>
+	
+	<sql id="insert_includes">
+		id,publisherId,title,content,startTime,endTime,position,attachmentUrl
+	</sql>
+	
+	<sql id="order">
+		order by createTime desc
+	</sql>
+	
+	<sql id="join">
+		left join users p on p.number = publisherId 
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="publisherId!=null and publisherId!=''">
+				publisherId=#{publisherId}
+			</if>
+		</trim>
+	</sql>
+	
+	
+	<insert id="add">
+		insert into competition(<include refid="insert_includes"/>) values(#{id},#{publisher.number},#{title},#{content},#{startTime},#{endTime},
+		#{position},#{attachmentUrl});
+	</insert>
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultMap="Competition" >
+		select <include refid="select_includes"/> from competition <include refid="join"/> 
+		<include refid="dynamicWhere"/> <include refid="order"/> limit #{start},#{pageSize} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from competition <include refid="join"/> <include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="queryById" resultMap="Competition" >
+		select <include refid="select_includes"/> from competition <include refid="join"/> where id=#{id} 
+	</select>
+	
+	<update id="update">
+		update competition 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="title!=null">
+				title=#{title},
+			</if>
+			<if test="content!=null">
+				content=#{content},
+			</if>
+			<if test="startTime!=null">
+				startTime=#{startTime},
+			</if>
+			<if test="endTime!=null">
+				endTime=#{endTime},
+			</if>
+			<if test="position!=null">
+				position=#{position},
+			</if>
+			<if test="attachmentUrl!=null and attachmentUrl!=''">
+				attachmentUrl=#{attachmentUrl}
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<update id="batchDelete">
+	 delete from competition where id in 
+		<foreach collection="array" item="ids" open="(" separator="," close=")">
+    		#{ids}
+    	</foreach>
+	</update>
+	
+</mapper>
