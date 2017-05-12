@@ -52,7 +52,7 @@ html,body{
 	  <div class="layui-form-item">
 	    <div class="layui-input-block">
 		 	<button class="layui-btn"  lay-submit="" lay-filter="demo1">修改信息</button>
-	    	<a href="${webRoot }/front/users/password" class="layui-btn layui-btn-normal">更新密码</a>
+	    	<a href="${webRoot }/manager/users/password" class="layui-btn layui-btn-normal">更新密码</a>
 	    	</div>
 	    </div>
 	  </form>

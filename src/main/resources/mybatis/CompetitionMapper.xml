@@ -12,6 +12,7 @@
 		<result property="attachmentUrl" column="attachmentUrl"/>
 		<result property="createTime" column="createTime"/>
 		<result property="finished" column="finished"/>
+		<result property="checkStep" column="checkStep"/>
 		<association property="publisher" column="publisherId" javaType="com.fuchen.academic.domain.Users">
 			<id property="number" column="number"/>
 			<result property="name" column="name"/>
@@ -19,7 +20,7 @@
 	</resultMap>
 	
 	<sql id="select_includes">
-		id,title,content,startTime,endTime,position,attachmentUrl,createTime,finished,p.number,p.name
+		id,title,content,startTime,endTime,position,attachmentUrl,createTime,finished,p.number,p.name,checkStep
 	</sql>
 	
 	<sql id="insert_includes">

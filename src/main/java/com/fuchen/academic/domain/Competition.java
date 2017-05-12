@@ -26,6 +26,7 @@ public class Competition {
 	 * 项目描述
 	 */
 	private String content;
+	
 	/**
 	 * 比赛开始时间
 	 */
@@ -56,6 +57,12 @@ public class Competition {
 	 */
 	private Boolean finished;
 	
+	/**
+	 * 审核步骤
+	 * 0 开始 1 一级审核 2 二级审核 3 三级审核 -1 拒绝
+	 */
+	private Integer checkStep;
+	
 
 	public String getId() {
 		return id;
@@ -69,7 +76,7 @@ public class Competition {
 		return publisher;
 	}
 
-	public void setPublisherId(Users publisher) {
+	public void setPublisher(Users publisher) {
 		this.publisher = publisher;
 	}
 
@@ -137,14 +144,22 @@ public class Competition {
 		this.finished = finished;
 	}
 
+	public Integer getCheckStep() {
+		return checkStep;
+	}
+
+	public void setCheckStep(Integer checkStep) {
+		this.checkStep = checkStep;
+	}
+
 	@Override
 	public String toString() {
-		return "Competition [id=" + id + ", publisherId=" + publisher
-				+ ", title=" + title + ", content=" + content + ", startTime="
-				+ startTime + ", endTime=" + endTime + ", position=" + position
-				+ ", attachmentUrl=" + attachmentUrl + ", createTime="
-				+ createTime + ", finished=" + finished + "]";
+		return "Competition [id=" + id + ", publisher=" + publisher + ", title=" + title + ", content=" + content
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", position=" + position + ", attachmentUrl="
+				+ attachmentUrl + ", createTime=" + createTime + ", finished=" + finished + ", checkStep=" + checkStep
+				+ "]";
 	}
+
 	
 	
 	

@@ -3,7 +3,7 @@
 <mapper namespace="com.fuchen.academic.dao.UsersDao">
 	
 	<sql id="includes">
-		number,password,name,type,tel,email
+		number,password,name,type,tel,email,reviewlv
 	</sql>
 	
 	<sql id="dynamicWhere">

@@ -9,9 +9,67 @@
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	 <link rel="stylesheet" href="${webRoot }/layui/css/layui.css"  media="all">
+	   <style>
+	 	.schoollogo{
+	 		position:absolute;
+	 		right:0px;
+	 		width:227px;
+	 	}
+	 	h4{
+	 		background-image: url(${webRoot}/img/ri_bo_25.png);
+	 		clear:none;
+	 		color:white;
+	 		padding-left:5px;
+	 		font-weight: bold;
+	 	}
+	 	.schoollogo table{
+	 		width: 100%;
+	 		border-spacing: 0;
+	 		border-collapse: collapse;
+	 	}
+	 	.schoollogo table td{
+	 		width: 50%;
+	 		height: 100px;
+	 		vertical-align: middle;
+	 		text-align: center;
+	 	}
+	 	
+	 	.schoollogo table img{
+	 		width:85px;
+	 		height: 85px;
+	 	}
+	 </style>
 </head>
 <body>
-	<form class="layui-form layui-form-pane" action="${webRoot }/users/update" method="post">
+	<div style="padding-left:10px;background-color: #FBFBFB;line-height:2">
+	<i class="layui-icon">&#xe632;</i>
+	<span class="layui-breadcrumb">
+	  <a><cite>首页</cite></a>
+	  <a><cite>个人中心</cite></a>
+	  <a><cite>个人信息</cite></a>
+	</span>
+	</div>
+	<div class="schoollogo">
+  		<h4>合作院校</h4>
+  			<table>
+  				<tr>
+  					<td><img src="${webRoot }/img/hangdian.jpg"/></td><td><img src="${webRoot }/img/ligong.jpg"/></td>
+  				</tr>
+  				<tr>
+  					<td><img src="${webRoot }/img/ningbo.jpg"/></td><td><img src="${webRoot }/img/wenyi.jpg"/></td>
+  				</tr>
+  				<tr>
+  					<td><img src="${webRoot }/img/zhecaijing.jpg"/></td><td><img src="${webRoot }/img/zhechuanmei.jpg"/></td>
+  				</tr>
+  				
+  				<tr>
+  					<td><img src="${webRoot }/img/zheda.jpg"/></td><td><img src="${webRoot }/img/zhegongshang.jpg"/></td>
+  				</tr>
+  			</table>
+  	</div>
+	<form class="layui-form layui-form-pane" action="${webRoot }/manager/users/update" method="post" style="width: 500px;padding:20px;">
+		<input type="hidden" name="number" value="${curUser.number }"/>
+	
 	 <div class="layui-form-item">
 	    <label class="layui-form-label">用户类型</label>
 	    <div class="layui-input-block">
@@ -48,9 +106,9 @@
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
-layui.use(['form'], function(){
+layui.use(['form','element'], function(){
   var form = layui.form();
- 
+  var element = layui.element();
   //自定义验证规则
   form.verify({});
   

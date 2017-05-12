@@ -1,8 +1,7 @@
-package com.fuchen.academic.controller;
+package com.fuchen.academic.controller.background;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,22 +30,18 @@ import com.fuchen.academic.constants.Const;
 import com.fuchen.academic.dao.CompetitionDao;
 import com.fuchen.academic.dao.MatchesDao;
 import com.fuchen.academic.domain.Competition;
-import com.fuchen.academic.domain.Matches;
 import com.fuchen.academic.domain.Users;
 
 @Controller
-@RequestMapping("/competition")
-public class CompetitionController {
+@RequestMapping("/manager/competition")
+public class BgCompetitionController {
 	
-	private static final Logger LOG = Logger.getLogger(CompetitionController.class);
+	private static final Logger LOG = Logger.getLogger(BgCompetitionController.class);
 	
 	private static final String URL = ResourcesUtil.getResourcesURL();
 	
 	@Autowired
 	private CompetitionDao competitionDao;
-	
-	@Autowired
-	private MatchesDao matchesDao;
 	
 	/**
 	 * 项目发布页面
@@ -63,9 +58,9 @@ public class CompetitionController {
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
 		
-		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
+//		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
 		
-		condition.put("publisherId", self.getNumber());
+//		condition.put("publisherId", self.getNumber());
 		
 		Integer total = competitionDao.count(condition);
 		
@@ -77,7 +72,7 @@ public class CompetitionController {
 		List<Competition> pageList = competitionDao.queryByPage(condition);
 		pagination.setItems(pageList);
 		
-		ModelAndView mv = new ModelAndView("competition-self-list");
+		ModelAndView mv = new ModelAndView("background/competition-self-list");
 		mv.addObject(Const.PAGINATION, pagination);
 		
 		return mv;
@@ -89,7 +84,7 @@ public class CompetitionController {
 	 */
 	@RequestMapping(value="/add",method={RequestMethod.GET})
 	public String add(){
-		return "competition-add";
+		return "background/competition-add";
 	}
 	
 	/**
@@ -101,11 +96,12 @@ public class CompetitionController {
 	 */
 	@RequestMapping(value="/add",method={RequestMethod.POST})
 	public ModelAndView add(@RequestParam("attachment") MultipartFile file, @ModelAttribute Competition competition,HttpSession session){
-		ModelAndView mv = new ModelAndView(Const.RESULT);
+		ModelAndView mv = new ModelAndView(Const.BG_RESULT);
 		File dir = new File(URL);
 		if(!dir.exists()){
 			dir.mkdirs();
 		}
+		//获取当前用户
 		Users curUser = (Users) session.getAttribute(Const.CURRENT_USER);
 		competition.setId(StringUtil.getUUID());
 		competition.setPublisher(curUser);
@@ -120,9 +116,12 @@ public class CompetitionController {
 				LOG.error("文件上传异常",e);
 			} 
 		}
-		
+		//项目添加
 		competitionDao.add(competition);
-		mv.addObject(Const.RESULT, "竞赛项目发布成功!");
+		//项目发布
+		mv.addObject(Const.RESULT, "竞赛项目添加成功!");
+		mv.addObject(Const.NAVS,new String[]{"项目管理","项目申请"});
+		//返回分页
 		mv.addObject(Const.RETURN_URL, "querySelfByPage");
 		return mv;
 	}
@@ -163,35 +162,10 @@ public class CompetitionController {
 	 */
 	@RequestMapping(value="/detail")
 	public ModelAndView queryById(String id,HttpSession session){
-		ModelAndView mv = new ModelAndView("competition-detail");
+		ModelAndView mv = new ModelAndView("background/competition-detail");
 		if(StringUtil.isNotEmpty(id)){
 			Competition competition = competitionDao.queryById(id);
 			mv.addObject(Const.RESULT, competition);
-			
-			//判断能否参赛
-			boolean canJoin = false;
-			//1 判断是否在参赛时间内
-			Date now = new Date();
-			if(competition.getStartTime().before(now) && competition.getEndTime().after(now)){
-				canJoin = true;
-			}
-			//2 判断参赛资格
-			if(canJoin){
-				Users users = (Users) session.getAttribute(Const.CURRENT_USER);
-				if(Const.USERS_PARTICIPANT.equals(users.getType())){
-					Map<String,Object> params = new HashMap<String,Object>();
-					params.put("competitionId", id);
-					params.put("number", users.getNumber());
-					Matches matches = matchesDao.queryByUC(params);
-					if(null!= matches){
-						canJoin =false;
-					}
-				}else{
-					canJoin = false;
-				}
-			}
-			
-			mv.addObject("canJoin", canJoin);
 		}
 		return mv;
 	}
@@ -218,7 +192,7 @@ public class CompetitionController {
 	 */
 	@RequestMapping(value="/update",method={RequestMethod.GET})
 	public ModelAndView update(String id){
-		ModelAndView mv = new ModelAndView("competition-update");
+		ModelAndView mv = new ModelAndView("background/competition-update");
 		if(StringUtil.isNotEmpty(id)){
 			Competition competition = competitionDao.queryById(id);
 			mv.addObject(Const.RESULT, competition);
@@ -248,6 +222,9 @@ public class CompetitionController {
 		}
 		competitionDao.update(competition);
 		mv.addObject(Const.RESULT, "竞赛项目更新成功!");
+		
+		mv.addObject(Const.NAVS,new String[]{"项目管理","项目申请"});
+		
 		mv.addObject(Const.RETURN_URL, "querySelfByPage");
 		return mv;
 	}

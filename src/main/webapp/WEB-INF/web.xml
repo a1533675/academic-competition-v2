@@ -25,7 +25,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- 允许放行的URLs -->
+	<!-- 允许放行的URLs 
 	<context-param>
 	  	<param-name>ALLOW_URLS</param-name>
 	  	<param-value>/login</param-value>
@@ -39,7 +39,7 @@
 		<filter-name>sessionFilter</filter-name>
 		<url-pattern>/manager/*</url-pattern>
 	</filter-mapping>
-	
+	-->
 	<filter>
 		<filter-name>loginedFilter</filter-name>
 		<filter-class>org.ysh.springmvc.base.filter.LoginedFilter</filter-class>
@@ -90,12 +90,10 @@
 	<welcome-file-list>
     	<welcome-file>index.html</welcome-file>
   	</welcome-file-list>
-	<!-- 
 	<jsp-config>
 	 	<taglib>
-	 		<taglib-uri>tags/labor</taglib-uri>
-	 		<taglib-location>/WEB-INF/tags/labor.tld</taglib-location>
+	 		<taglib-uri>tags/academic</taglib-uri>
+	 		<taglib-location>/WEB-INF/tags/academic.tld</taglib-location>
 	 	</taglib>
 	 </jsp-config>
-	 -->
 </web-app>

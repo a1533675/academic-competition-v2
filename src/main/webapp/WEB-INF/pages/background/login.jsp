@@ -17,7 +17,7 @@
   
   <div style="max-width:500px;margin:auto;">
   	<h3 style="text-align:center;background-color: rgb(27,95,254);border-radius: 5px 5px 0px 0px;line-height: 3;font-weight: bold;color:white;margin-top:10px;">后 台 登 录</h3>
-	<form name="login-form" class="layui-form" action="${webRoot }/login" method="POST"  style="border:1px solid lightgray;padding-top:20px;padding-right:20px;margin-bottom:20px;">
+	<form name="login-form" class="layui-form" action="${webRoot }/manager/login" method="POST"  style="border:1px solid lightgray;padding-top:20px;padding-right:20px;margin-bottom:20px;">
  	<div class="layui-form-item">
     	<label class="layui-form-label">用户名</label>
 	    <div class="layui-input-block">
