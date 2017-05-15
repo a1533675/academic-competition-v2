@@ -38,6 +38,16 @@ public class Competition {
 	private Date endTime;
 	
 	/**
+	 * 报名开始时间
+	 */
+	private Date enrollStartTime;
+	
+	/**
+	 * 报名结束时间
+	 */
+	private Date enrollEndTime;
+	
+	/**
 	 * 比赛地点
 	 */
 	private String position;
@@ -152,13 +162,30 @@ public class Competition {
 		this.checkStep = checkStep;
 	}
 
+	public Date getEnrollStartTime() {
+		return enrollStartTime;
+	}
+
+	public void setEnrollStartTime(Date enrollStartTime) {
+		this.enrollStartTime = enrollStartTime;
+	}
+
+	public Date getEnrollEndTime() {
+		return enrollEndTime;
+	}
+
+	public void setEnrollEndTime(Date enrollEndTime) {
+		this.enrollEndTime = enrollEndTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Competition [id=" + id + ", publisher=" + publisher + ", title=" + title + ", content=" + content
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", position=" + position + ", attachmentUrl="
-				+ attachmentUrl + ", createTime=" + createTime + ", finished=" + finished + ", checkStep=" + checkStep
-				+ "]";
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", enrollStartTime=" + enrollStartTime
+				+ ", enrollEndTime=" + enrollEndTime + ", position=" + position + ", attachmentUrl=" + attachmentUrl
+				+ ", createTime=" + createTime + ", finished=" + finished + ", checkStep=" + checkStep + "]";
 	}
+
 
 	
 	

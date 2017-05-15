@@ -15,7 +15,7 @@
   	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 	  <legend>项目发布</legend>
 	</fieldset>
- 	<form name="competition-form" class="layui-form" action="${webRoot }/competition/add" method="POST" enctype="multipart/form-data">
+ 	<form name="competition-form" class="layui-form" action="${webRoot }/manager/competition/add" method="POST" enctype="multipart/form-data">
  	
  	<div class="layui-form-item">
     	<label class="layui-form-label">竞赛主题</label>

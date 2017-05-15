@@ -24,6 +24,15 @@
 	    </div>
   	</div>
   	<div class="layui-form-item">
+    	<label class="layui-form-label">报名时间</label>
+	    <div class="layui-input-inline">
+        	<input name="enrollStartTime" id="date" lay-verify="required" placeholder="开始时间" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text">
+      	</div>
+      	<div class="layui-input-inline">
+        	<input name="enrollEndTime" id="date" lay-verify="required" placeholder="结束时间" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text">
+      	</div>
+  	</div>
+  	<div class="layui-form-item">
     	<label class="layui-form-label">竞赛时间</label>
 	    <div class="layui-input-inline">
         	<input name="startTime" id="date" lay-verify="required" placeholder="开始时间" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text">

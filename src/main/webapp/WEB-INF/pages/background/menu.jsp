@@ -23,9 +23,9 @@
     <a href="javascript:;">项目管理</a>
     <dl class="layui-nav-child">
       <dd><a href="${webRoot }/manager/competition/querySelfByPage" target="main">项目申请</a></dd>
-      <dd><a href="" target="main">一级审核</a></dd>
-	  <dd><a href="" target="main">二级审核</a></dd>
-	  <dd><a href="" target="main">最终审核</a></dd>
+      <dd><a href="${webRoot }/manager/competition/checklist?checkStep=0" target="main">一级审核</a></dd>
+	  <dd><a href="${webRoot }/manager/competition/checklist?checkStep=1" target="main">二级审核</a></dd>
+	  <dd><a href="${webRoot }/manager/competition/checklist?checkStep=2" target="main">最终审核</a></dd>
       <dd><a href="" target="main">项目查询</a></dd>
     </dl>
   </li>

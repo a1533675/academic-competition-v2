@@ -25,28 +25,28 @@
          </layout>  
     </appender>  
 	
-	<logger additivity="true" name="com.library.service">
-		<level value="debug" />
-		<appender-ref ref="RollingFile" />
+	<logger additivity="true" name="com.fuchen.academic.controller">
+		<level value="error" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 	<logger additivity="true" name="java.sql.Connection">
 		<level value="debug" />
-		<appender-ref ref="RollingFile" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 	<logger additivity="true" name="java.sql.Statement">
 		<level value="debug" />
-		<appender-ref ref="RollingFile" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 	<logger additivity="true" name="java.sql.PreparedStatement">
 		<level value="debug" />
-		<appender-ref ref="RollingFile" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 	<logger additivity="true" name="java.sql.ResultSet">
 		<level value="debug" />
-		<appender-ref ref="RollingFile" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 	<root>
-		<priority value="warn" />
+		<priority value="DEBUG" />
 		<appender-ref ref="ERROR" />
 		<appender-ref ref="STDOUT" />
 	</root>

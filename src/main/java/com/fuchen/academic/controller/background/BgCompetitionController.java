@@ -28,7 +28,6 @@ import org.ysh.springmvc.base.vo.Pagination;
 
 import com.fuchen.academic.constants.Const;
 import com.fuchen.academic.dao.CompetitionDao;
-import com.fuchen.academic.dao.MatchesDao;
 import com.fuchen.academic.domain.Competition;
 import com.fuchen.academic.domain.Users;
 
@@ -57,10 +56,6 @@ public class BgCompetitionController {
 		}
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
-		
-//		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
-		
-//		condition.put("publisherId", self.getNumber());
 		
 		Integer total = competitionDao.count(condition);
 		
@@ -154,6 +149,63 @@ public class BgCompetitionController {
 		
 		return mv;
 	}
+	
+	
+	@RequestMapping(value="/checklist")
+	public ModelAndView checklist(String page,Integer checkStep){
+		Integer curPage = 1;
+		if(StringUtil.isNotEmpty(page)){
+			curPage = Integer.parseInt(page);
+		}
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		
+		params.put("checkStep", checkStep);
+		
+		Integer total = competitionDao.count(params);
+		
+		Pagination<Competition> pagination = new Pagination<Competition>(curPage, total);
+		
+		params.put("start", (curPage-1)*pagination.getPageSize());
+		params.put("pageSize", pagination.getPageSize());
+		
+		List<Competition> pageList = competitionDao.queryByPage(params);
+		pagination.setItems(pageList);
+		
+		ModelAndView mv = new ModelAndView("background/competition-check-list");
+		mv.addObject(Const.PAGINATION, pagination);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/initCheck")
+	public ModelAndView initCheck(String id){
+		ModelAndView mv = new ModelAndView("background/competition-check");
+		Competition competition = competitionDao.queryById(id);
+		mv.addObject(Const.RESULT, competition);
+		return mv;
+	}
+	
+	
+	/**
+	 * 审核项目
+	 * @param page
+	 * @param competition
+	 * @return
+	 */
+	@RequestMapping(value="/check")
+	public ModelAndView check(String page,@ModelAttribute Competition competition,Integer initStep){
+		ModelAndView res = new ModelAndView(Const.BG_RESULT);
+		competitionDao.update(competition);
+		//项目发布
+		res.addObject(Const.RESULT, "竞赛项目审核成功!");
+		res.addObject(Const.NAVS,new String[]{"项目管理","项目审核"});
+		
+		//返回分页
+		res.addObject(Const.RETURN_URL, "checklist?checkStep="+initStep);
+		return res;
+	}
+	
 	
 	/**
 	 * 根据ID查询详情
