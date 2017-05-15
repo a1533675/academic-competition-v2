@@ -105,4 +105,8 @@
     	</foreach>
 	</update>
 	
+	<select id="queryCanJoinList" parameterType="java.util.Map" resultMap="Competition" >
+		select <include refid="select_includes"/> from competition <include refid="join"/> where current_timestamp() between enrollStartTime and enrollEndTime;  
+	</select>
+	
 </mapper>

@@ -26,7 +26,7 @@
       <dd><a href="${webRoot }/manager/competition/checklist?checkStep=0" target="main">一级审核</a></dd>
 	  <dd><a href="${webRoot }/manager/competition/checklist?checkStep=1" target="main">二级审核</a></dd>
 	  <dd><a href="${webRoot }/manager/competition/checklist?checkStep=2" target="main">最终审核</a></dd>
-      <dd><a href="" target="main">项目查询</a></dd>
+      <dd><a href="${webRoot }/manager/competition/passlist" target="main">项目查询</a></dd>
     </dl>
   </li>
   <li class="layui-nav-item"><a href="">云市场</a></li>

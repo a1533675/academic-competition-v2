@@ -75,21 +75,21 @@
   		</div>
 
 	<div class="main" style="padding:20px;">
-	  <div class="layui-btn-group" style="margin-bottom:10px;">
-	    <button class="layui-btn" id="update">审核&nbsp;<i class="layui-icon">&#xe642;</i></button>
-	  </div>
-	  
- <form action="" method="post" class="layui-form">
+<div class="layui-tab">
+  <ul class="layui-tab-title">
+    <li class="layui-this">通过项目</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+      <form action="" method="post" class="layui-form">
 	<table class="layui-table" lay-skin="line">
   <colgroup>
-  	<col width="50">
   	<col>
     <col width="200">
     <col width="100">
   </colgroup>
   <thead>
     <tr>
-      <th>#</th>
       <th>竞赛通知</th>
       <th>创建时间</th>
       <th>审核状态</th>
@@ -98,7 +98,6 @@
   <tbody>
 	<c:forEach var="competition" items="${pagination.items }">
     <tr>
-      <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${competition.id }"></td>
       <td>${competition.title }</td>
       <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
       <td><academic:checkStep step="${competition.checkStep }"/></td>
@@ -108,6 +107,10 @@
 </table> 
 	${pagination.render } 
 	</form>
+    </div>
+  </div>
+</div>	  
+ 
  </div>
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
@@ -118,36 +121,6 @@ layui.use(['form','layer','jquery','element'], function(){
   var layer = layui.layer;
   var element = layui.element();
   
-	//添加按钮
-	$("#update").click(function(){
-		
-		var rightLv = ${curUser.reviewlv};//用户已有的权限
-		var checkLv = ${param.checkStep };/////从此处开始修改
-		
-		if(checkLv +　1!= rightLv){
-			layer.msg("您没有权限审核此项目!");
-			return ;
-		}
-		
-		var $chk = $("[name = 'ids[]']:checkbox");
-		if($chk.filter(":checked").length > 1){
-			layer.msg("只能选择一项!");
-			return;
-		}else if($chk.filter(":checked").length < 1){
-			layer.msg("请选择一项!");
-			return;
-		}
-		$(location).prop("href","${webRoot}/manager/competition/initCheck?id="+$chk.filter(":checked").val());
-	});
-	
-  //全选
-  form.on('checkbox(allChoose)', function(data){
-    var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-    child.each(function(index, item){
-      item.checked = data.elem.checked;
-    });
-    form.render('checkbox');
-  });
   //监听提交
   form.on('submit(demo1)', function(data){
     return true;

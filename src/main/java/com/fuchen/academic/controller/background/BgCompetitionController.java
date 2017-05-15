@@ -178,6 +178,33 @@ public class BgCompetitionController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/passlist")
+	public ModelAndView passlist(String page){
+		Integer curPage = 1;
+		if(StringUtil.isNotEmpty(page)){
+			curPage = Integer.parseInt(page);
+		}
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		
+		params.put("checkStep", Const.CHECK_STEP_THIRD);
+		
+		Integer total = competitionDao.count(params);
+		
+		Pagination<Competition> pagination = new Pagination<Competition>(curPage, total);
+		
+		params.put("start", (curPage-1)*pagination.getPageSize());
+		params.put("pageSize", pagination.getPageSize());
+		
+		List<Competition> pageList = competitionDao.queryByPage(params);
+		pagination.setItems(pageList);
+		
+		ModelAndView mv = new ModelAndView("background/competition-pass-list");
+		mv.addObject(Const.PAGINATION, pagination);
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="/initCheck")
 	public ModelAndView initCheck(String id){
 		ModelAndView mv = new ModelAndView("background/competition-check");
