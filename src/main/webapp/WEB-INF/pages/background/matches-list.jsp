@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="tags/academic" prefix="academic" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +9,7 @@
 	 <meta name="renderer" content="webkit">
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	  <link rel="stylesheet" href="${webRoot }/layui/css/bootstrap.css"  media="all">
+	 <link rel="stylesheet" href="${webRoot }/layui/css/bootstrap.css"  media="all">
 	 <link rel="stylesheet" href="${webRoot }/layui/css/layui.css"  media="all">
 	 <style>
 	 	.schoollogo{
@@ -19,7 +18,7 @@
 	 		width:227px;
 	 	}
 	 	.main{
-	 		width:900px;
+	 		width:750px;
 	 	}
 	 	h4{
 	 		background-image: url(${webRoot}/img/ri_bo_25.png);
@@ -47,17 +46,18 @@
 	 </style>
   </head>
   <body>
-  		<div style="padding-left:10px;background-color: #FBFBFB;line-height:2;">
+  <div style="padding-left:10px;background-color: #FBFBFB;line-height:2;">
 		<i class="layui-icon">&#xe632;</i>
 		<span class="layui-breadcrumb">
 		  <a><cite>首页</cite></a>
-		  <a><cite>项目管理</cite></a>
-		  <a><cite>项目审核</cite></a>
+		  <a><cite>评分管理</cite></a>
+		  <a><cite>项目评分</cite></a>
 		</span>
 		</div>
   
- 		<div class="schoollogo">
-  			<h4>合作院校</h4>
+    <div>
+ <div class="schoollogo">
+  		<h4>合作院校</h4>
   			<table>
   				<tr>
   					<td><img src="${webRoot }/img/hangdian.jpg"/></td><td><img src="${webRoot }/img/ligong.jpg"/></td>
@@ -72,74 +72,58 @@
   					<td><img src="${webRoot }/img/zheda.jpg"/></td><td><img src="${webRoot }/img/zhegongshang.jpg"/></td>
   				</tr>
   			</table>
-  		</div>
-
+  	</div>
 	<div class="main" style="padding:20px;">
-	  <div class="layui-btn-group" style="margin-bottom:10px;">
-	    <button class="layui-btn" id="update">审核&nbsp;<i class="layui-icon">&#xe642;</i></button>
-	  </div>
-	  
- <form action="" method="post" class="layui-form">
-	<table class="layui-table" lay-skin="line">
+<table class="layui-table" lay-skin="line">
   <colgroup>
-  	<col width="50">
+    <col width="800">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th><p>&nbsp;&nbsp;&nbsp;&nbsp;以下是比赛参与者提交的作品列表，请您本着公正公平的态度，对学生的作品予以认真的评价。</p>
+      	  <p>&nbsp;&nbsp;&nbsp;&nbsp;感谢您的真诚评价与肯定!</p>
+      </th>
+    </tr> 
+  </thead>
+</table> 
+
+<table class="layui-table" lay-skin="line">
+  <colgroup>
   	<col>
     <col width="200">
+    <col width="100">
+    <col width="100">
     <col width="100">
   </colgroup>
   <thead>
     <tr>
-      <th>#</th>
-      <th>竞赛通知</th>
-      <th>创建时间</th>
-      <th>审核状态</th>
+      <th>参赛者姓名</th>
+      <th>上传时间</th>
+      <th>得分1</th>
+      <th>得分2</th>
+      <th>得分3</th>
     </tr> 
   </thead>
   <tbody>
-	<c:forEach var="competition" items="${pagination.items }">
+	<c:forEach var="matches" items="${list }">
     <tr>
-      <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${competition.id }"></td>
-      <td>${competition.title }</td>
-      <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-      <td><academic:checkStep step="${competition.checkStep }"/></td>
+      <td><a href="${webRoot}/manager/matches/score?id=${matches.id }">${matches.participant.name }</a></td>
+      <td><fmt:formatDate value="${matches.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+      <td>${matches.score1 }</td><td>${matches.score2 }</td><td>${matches.score3 }</td>
     </tr>
     </c:forEach>
   </tbody>
-</table> 
-	${pagination.render } 
-	</form>
+</table>
+ </div>
  </div>
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
-layui.use(['form','layer','jquery','element'], function(){
+layui.use(['form','element','layer'], function(){
   var form = layui.form();
-  var $ = layui.jquery;
-  var layer = layui.layer;
   var element = layui.element();
-  
-	//添加按钮
-	$("#update").click(function(){
-		
-		var rightLv = ${curUser.reviewlv};//用户已有的权限
-		var checkLv = ${param.checkStep };
-		
-		if(checkLv + 1!= rightLv){
-			layer.msg("您没有权限审核此项目!");
-			return ;
-		}
-		
-		var $chk = $("[name = 'ids[]']:checkbox");
-		if($chk.filter(":checked").length > 1){
-			layer.msg("只能选择一项!");
-			return;
-		}else if($chk.filter(":checked").length < 1){
-			layer.msg("请选择一项!");
-			return;
-		}
-		$(location).prop("href","${webRoot}/manager/matches/list?id="+$chk.filter(":checked").val());
-	});
-	
+  var layer = layui.layer;
   //监听提交
   form.on('submit(demo1)', function(data){
     return true;

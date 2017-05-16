@@ -2,6 +2,7 @@ package com.fuchen.academic.controller.background;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,6 +205,36 @@ public class BgCompetitionController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="/scorelist")
+	public ModelAndView scorelist(String page){
+		Integer curPage = 1;
+		if(StringUtil.isNotEmpty(page)){
+			curPage = Integer.parseInt(page);
+		}
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		
+		//查询当前比赛项目审核通过，且超过比赛时间的项目
+		params.put("checkStep", Const.CHECK_STEP_THIRD);
+		params.put("scoreTime", new Date());
+		
+		Integer total = competitionDao.count(params);
+		
+		Pagination<Competition> pagination = new Pagination<Competition>(curPage, total);
+		
+		params.put("start", (curPage-1)*pagination.getPageSize());
+		params.put("pageSize", pagination.getPageSize());
+		
+		List<Competition> pageList = competitionDao.queryByPage(params);
+		pagination.setItems(pageList);
+		
+		ModelAndView mv = new ModelAndView("background/competition-score-list");
+		mv.addObject(Const.PAGINATION, pagination);
+		
+		return mv;
+	}
+	
 	
 	@RequestMapping(value="/initCheck")
 	public ModelAndView initCheck(String id){

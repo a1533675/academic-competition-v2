@@ -40,7 +40,12 @@
 	<sql id="dynamicWhere">
 		<trim prefix="where" prefixOverrides="and">
 			<if test="checkStep!=null">
-				checkStep=#{checkStep}
+				and checkStep=#{checkStep}
+			</if>
+			<if test="endTime!=null">
+				<![CDATA[
+					and endTime < #{scoreTime}
+				]]>
 			</if>
 		</trim>
 	</sql>

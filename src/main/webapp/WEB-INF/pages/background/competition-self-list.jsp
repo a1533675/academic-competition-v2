@@ -75,7 +75,7 @@
   		</div>
 
 	<div class="main" style="padding:20px;">
-	  <div class="layui-btn-group" style="float:right;margin-bottom:10px;">
+	  <div class="layui-btn-group" style="margin-bottom:10px;">
 	    <button class="layui-btn layui-btn-primary" id="add">新增&nbsp;<i class="layui-icon">&#xe654;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="update">编辑&nbsp;<i class="layui-icon">&#xe642;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="delete">删除&nbsp;<i class="layui-icon">&#xe640;</i></button>

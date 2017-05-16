@@ -12,14 +12,14 @@
 </head>
 <body>
 	<ul class="layui-nav layui-nav-tree" lay-filter="demo">
-  <li class="layui-nav-item layui-nav-itemed">
+  <li class="layui-nav-item">
     <a href="javascript:;">个人中心</a>
     <dl class="layui-nav-child">
       <dd><a href="${webRoot }/manager/users/info" target="main">个人信息</a></dd>
       <dd><a href="${webRoot }/manager/users/password" target="main">密码修改</a></dd>
     </dl>
   </li>
-  <li class="layui-nav-item">
+  <li class="layui-nav-item layui-nav-itemed">
     <a href="javascript:;">项目管理</a>
     <dl class="layui-nav-child">
       <dd><a href="${webRoot }/manager/competition/querySelfByPage" target="main">项目申请</a></dd>
@@ -29,8 +29,20 @@
       <dd><a href="${webRoot }/manager/competition/passlist" target="main">项目查询</a></dd>
     </dl>
   </li>
-  <li class="layui-nav-item"><a href="">云市场</a></li>
-  <li class="layui-nav-item"><a href="">社区</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">评分管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="${webRoot }/manager/competition/scorelist" target="main">项目评分</a></dd>
+      
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">通知公告</a>
+    <dl class="layui-nav-child">
+      <dd><a href="${webRoot }/manager/notice/querySelfByPage" target="main">系统公告</a></dd>
+      <dd><a href="${webRoot }/manager/awards/querySelfByPage" target="main">获奖通知</a></dd>
+    </dl>
+  </li>
 </ul>
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>

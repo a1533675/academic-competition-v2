@@ -51,11 +51,11 @@
 		<i class="layui-icon">&#xe632;</i>
 		<span class="layui-breadcrumb">
 		  <a><cite>首页</cite></a>
-		  <a><cite>项目管理</cite></a>
-		  <a><cite>项目审核</cite></a>
+		  <a><cite>评分管理</cite></a>
+		  <a><cite>项目评分</cite></a>
 		</span>
 		</div>
-  
+  		
  		<div class="schoollogo">
   			<h4>合作院校</h4>
   			<table>
@@ -76,7 +76,7 @@
 
 	<div class="main" style="padding:20px;">
 	  <div class="layui-btn-group" style="margin-bottom:10px;">
-	    <button class="layui-btn" id="update">审核&nbsp;<i class="layui-icon">&#xe642;</i></button>
+	    <button class="layui-btn" id="update">评分&nbsp;<i class="layui-icon">&#xe642;</i></button>
 	  </div>
 	  
  <form action="" method="post" class="layui-form">
@@ -85,14 +85,12 @@
   	<col width="50">
   	<col>
     <col width="200">
-    <col width="100">
   </colgroup>
   <thead>
     <tr>
       <th>#</th>
       <th>竞赛通知</th>
       <th>创建时间</th>
-      <th>审核状态</th>
     </tr> 
   </thead>
   <tbody>
@@ -101,7 +99,6 @@
       <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${competition.id }"></td>
       <td>${competition.title }</td>
       <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-      <td><academic:checkStep step="${competition.checkStep }"/></td>
     </tr>
     </c:forEach>
   </tbody>
@@ -117,17 +114,8 @@ layui.use(['form','layer','jquery','element'], function(){
   var $ = layui.jquery;
   var layer = layui.layer;
   var element = layui.element();
-  
 	//添加按钮
 	$("#update").click(function(){
-		
-		var rightLv = ${curUser.reviewlv};//用户已有的权限
-		var checkLv = ${param.checkStep };
-		
-		if(checkLv + 1!= rightLv){
-			layer.msg("您没有权限审核此项目!");
-			return ;
-		}
 		
 		var $chk = $("[name = 'ids[]']:checkbox");
 		if($chk.filter(":checked").length > 1){
@@ -139,7 +127,6 @@ layui.use(['form','layer','jquery','element'], function(){
 		}
 		$(location).prop("href","${webRoot}/manager/matches/list?id="+$chk.filter(":checked").val());
 	});
-	
   //监听提交
   form.on('submit(demo1)', function(data){
     return true;

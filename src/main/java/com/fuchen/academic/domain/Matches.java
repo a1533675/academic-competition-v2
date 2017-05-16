@@ -33,6 +33,12 @@ public class Matches {
 	 * 提交时间
 	 */
 	private Date createTime;
+	
+	private Integer score1;
+	
+	private Integer score2;
+	
+	private Integer score3;
 
 	public String getId() {
 		return id;
@@ -82,12 +88,36 @@ public class Matches {
 		this.createTime = createTime;
 	}
 
+	public Integer getScore1() {
+		return score1;
+	}
+
+	public void setScore1(Integer score1) {
+		this.score1 = score1;
+	}
+
+	public Integer getScore2() {
+		return score2;
+	}
+
+	public void setScore2(Integer score2) {
+		this.score2 = score2;
+	}
+
+	public Integer getScore3() {
+		return score3;
+	}
+
+	public void setScore3(Integer score3) {
+		this.score3 = score3;
+	}
+
 	@Override
 	public String toString() {
-		return "Match [id=" + id + ", participant=" + participant
-				+ ", competition=" + competition + ", content=" + content
-				+ ", attachmentUrl=" + attachmentUrl + ", createTime="
-				+ createTime + "]";
+		return "Matches [id=" + id + ", participant=" + participant + ", competition=" + competition + ", content="
+				+ content + ", attachmentUrl=" + attachmentUrl + ", createTime=" + createTime + ", score1=" + score1
+				+ ", score2=" + score2 + ", score3=" + score3 + "]";
 	}
+
 	
 }

@@ -7,6 +7,9 @@
 		<result property="content" column="content"/>
 		<result property="attachmentUrl" column="attachmentUrl"/>
 		<result property="createTime" column="createTime"/>
+		<result property="score1" column="score1"/>
+		<result property="score2" column="score2"/>
+		<result property="score3" column="score3"/>
 		<association property="participant" column="participantId" javaType="com.fuchen.academic.domain.Users">
 			<id property="number" column="number"/>
 			<result property="name" column="name"/>
@@ -21,7 +24,7 @@
 	</resultMap>
 	
 	<sql id="select_includes">
-		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id,c.title,c.content,c.startTime,c.endTime
+		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id,c.title,c.content,c.startTime,c.endTime,score1,score2,score3
 	</sql>
 	
 	<sql id="insert_includes">
@@ -46,6 +49,22 @@
 			</if>
 		</trim>
 	</sql>
+	
+	<update id="update">
+		update matches
+		<trim prefix="set" suffixOverrides="," >
+			<if test="score1 != null">
+				score1 = #{score1},
+			</if>
+			<if test="score2 != null">
+				score2 = #{score2},
+			</if>
+			<if test="score3 != null">
+				score3 = #{score3}
+			</if>
+		</trim>
+			where id=#{id}
+	</update>
 	
 	<insert id="add">
 		insert into matches(<include refid="insert_includes"/>) values(#{id},#{participant.number},#{competition.id},#{content},#{attachmentUrl});
