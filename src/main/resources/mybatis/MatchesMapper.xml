@@ -15,16 +15,17 @@
 			<result property="name" column="name"/>
 		</association>
 		<association property="competition" column="competitionId" javaType="com.fuchen.academic.domain.Competition">
-			<id property="id" column="id"/>
+			<id property="id" column="cid"/>
 			<result property="title" column="title"/>
-			<result property="content" column="content"/>
+			<result property="content" column="ccontent"/>
 			<result property="startTime" column="startTime"/>
 			<result property="endTime" column="endTime"/>
+			<result property="createTime" column="ccreateTime"/>
 		</association>
 	</resultMap>
 	
 	<sql id="select_includes">
-		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id,c.title,c.content,c.startTime,c.endTime,score1,score2,score3
+		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id as cid,c.title,c.content as ccontent,c.startTime,c.endTime,c.createTime as ccreateTime,score1,score2,score3
 	</sql>
 	
 	<sql id="insert_includes">
@@ -84,6 +85,10 @@
 	
 	
 	<select id="queryByUC" resultMap="Matches">
+		select <include refid="select_includes"/> from matches m <include refid="join"/> <include refid="dynamicWhere"/> 
+	</select>
+	
+	<select id="queryByUser" resultMap="Matches">
 		select <include refid="select_includes"/> from matches m <include refid="join"/> <include refid="dynamicWhere"/> 
 	</select>
 	

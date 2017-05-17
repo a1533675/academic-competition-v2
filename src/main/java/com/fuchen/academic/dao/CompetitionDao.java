@@ -9,4 +9,5 @@ public interface CompetitionDao extends BaseDao<Competition>{
 
 	public List<Competition> queryCanJoinList(Map<String,Object> param);
 	
+	public List<Competition> queryHistoryList(Map<String,Object> param);
 }

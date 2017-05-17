@@ -22,7 +22,8 @@
 	 		line-height: 2
 	 	}
 	 	.schoollogo{
-	 		float:right;
+	 		position:absolute;
+	 		right:0;
 	 		width:227px;
 	 	}
 	 	.main{
@@ -61,7 +62,14 @@
 	 </style>
   </head>
   <body>
-  
+  <div style="padding-left:10px;background-color: #FBFBFB;line-height:2;">
+		<i class="layui-icon">&#xe632;</i>
+		<span class="layui-breadcrumb">
+		  <a><cite>首页</cite></a>
+		  <a><cite>通知公告</cite></a>
+		  <a><cite>获奖通知</cite></a>
+		</span>
+		</div>
   <div>
   	<div class="schoollogo">
   		<h4>合作院校</h4>
@@ -82,7 +90,7 @@
   			</table>
   	</div>
   
-	<div class="main">
+	<div class="main" style="padding:20px">
 		<div class="title">
 			${result.title }
 		</div>
@@ -90,23 +98,27 @@
 			<label>发布时间:</label>&nbsp;&nbsp;<fmt:formatDate value="${result.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</div>
 		
-		<div class="content">
+		<blockquote class="layui-elem-quote layui-quote-nm">
 			${result.content }
-		</div>
+		</blockquote>
 		<hr>
 		<p>附件</p>
 		<c:if test="${not empty result.attachmentUrl }">
-			<p><a href="${webRoot }/notice/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
+			<p><a href="${webRoot }/manager/notice/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
 		</c:if>
+		
+		<div class="layui-form-item" style="text-align: center;">
+	      <a href="${webRoot }/manager/awards/querySelfByPage" class="layui-btn">返回列表</a>
+  		</div>
 	</div>
 	
  </div>
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
-layui.use(['form'], function(){
+layui.use(['form','element'], function(){
   var form = layui.form();
-  
+  var element = layui.element();
   //监听提交
   form.on('submit(demo1)', function(data){
     return true;

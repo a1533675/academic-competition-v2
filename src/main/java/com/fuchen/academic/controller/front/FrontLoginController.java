@@ -59,7 +59,7 @@ public class FrontLoginController {
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put("start", (curPage-1)*pagination.getPageSize());
 			params.put("pageSize", pagination.getPageSize());
-			
+			params.put("checkStep", Const.CHECK_STEP_THIRD);
 			List<Competition> pageList = competitionDao.queryByPage(params);
 			pagination.setItems(pageList);
 			

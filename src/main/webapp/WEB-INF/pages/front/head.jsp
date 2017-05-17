@@ -26,9 +26,10 @@
 		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/index.html">首页</a></li>
 		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/users/info">个人信息</a></li>
 		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/users/password">修改密码</a></li>
-		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/competition/join">竞赛报名</a></li>
+		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/competition/queryByPage">竞赛报名</a></li>
+		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/notice/queryByPage">我的竞赛</a></li>
 		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/notice/queryByPage">系统公告</a></li>
-		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/awards/queryByPage">获奖通知</a></li>
+		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/front/awards/queryByPage">获奖通知</a></li>
 		  <li class="layui-nav-item" style="line-height: 45px;"><a href="${webRoot }/manager/login">后台登录</a></li>
 		</ul>
 		

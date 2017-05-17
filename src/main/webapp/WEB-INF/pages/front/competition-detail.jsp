@@ -57,7 +57,7 @@
 		<p><a href="${webRoot }/competition/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
 		
 		<div class="layui-form-item" style="text-align: center;">
-	      <a href="${webRoot }/index.html" class="layui-btn">&#xe603; 返回首页</a>
+	      <a href="${param.returnUrl }" class="layui-btn">返回首页</a>
   		</div>
 	</div>
 	

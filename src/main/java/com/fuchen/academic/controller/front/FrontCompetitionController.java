@@ -48,9 +48,17 @@ public class FrontCompetitionController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/joinlist")
+	@RequestMapping(value="/queryByPage")
 	public ModelAndView joinlist(String page,HttpSession session){
-		ModelAndView mv = new ModelAndView();
+		if(null == session.getAttribute(Const.CURRENT_USER)){
+			return  new ModelAndView("front/login");
+		}
+		
+		ModelAndView mv = new ModelAndView("front/competition-list");
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("checkStep", Const.CHECK_STEP_THIRD);
+		mv.addObject("canList",competitionDao.queryCanJoinList(params));
+		mv.addObject("historyList",competitionDao.queryHistoryList(params));
 		return mv;
 	}
 	

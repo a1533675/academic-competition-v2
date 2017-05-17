@@ -60,7 +60,7 @@
 		<p><a href="${webRoot }/manager/competition/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
 		
 		<div class="layui-form-item" style="text-align: center;">
-	      <a href="${webRoot }/manager/competition/querySelfByPage" class="layui-btn">&#xe603; 返回列表</a>
+	      <a href="${webRoot }/manager/competition/querySelfByPage" class="layui-btn">返回列表</a>
   		</div>
 	</div>
 	

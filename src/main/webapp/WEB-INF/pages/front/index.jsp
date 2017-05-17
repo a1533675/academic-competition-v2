@@ -40,7 +40,7 @@ html,body{
 		  <tbody>
 			<c:forEach var="competition" items="${pagination.items }">
 		    <tr>
-		      <td><a href="${webRoot}/front/competition/detail?id=${competition.id }">${competition.title }</a></td>
+		      <td><a href="${webRoot}/front/competition/detail?id=${competition.id }&returnUrl=${webRoot }/index.html">${competition.title }</a></td>
 		      <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd"/></td>
 		    </tr>
 		    </c:forEach>

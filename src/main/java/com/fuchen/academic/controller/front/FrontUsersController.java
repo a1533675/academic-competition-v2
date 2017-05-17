@@ -43,7 +43,11 @@ public class FrontUsersController {
 	}
 	
 	@RequestMapping(value="/password",method={RequestMethod.GET})
-	public String password(){
+	public String password(HttpSession session){
+		if(null == session.getAttribute(Const.CURRENT_USER)){
+			return  "front/login";
+		}
+		
 		return "front/password";
 	}
 	

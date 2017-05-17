@@ -81,8 +81,14 @@
   </colgroup>
   <thead>
     <tr>
-      <th><p>&nbsp;&nbsp;&nbsp;&nbsp;以下是比赛参与者提交的作品列表，请您本着公正公平的态度，对学生的作品予以认真的评价。</p>
-      	  <p>&nbsp;&nbsp;&nbsp;&nbsp;感谢您的真诚评价与肯定!</p>
+      <th>
+      	<c:if test="${curUser.reviewlv > 0 }">
+      		<p>以下是比赛参与者提交的作品列表，请您本着公正公平的态度，对学生的作品予以认真的评价。</p>
+      	  	<p>感谢您的真诚评价与肯定!</p>
+      	</c:if>
+      	<c:if test="${curUser.reviewlv == 0 }">
+      		<p>很抱歉，您没有权限进行评分!</p>
+      	</c:if>
       </th>
     </tr> 
   </thead>
@@ -108,13 +114,21 @@
   <tbody>
 	<c:forEach var="matches" items="${list }">
     <tr>
-      <td><a href="${webRoot}/manager/matches/score?id=${matches.id }">${matches.participant.name }</a></td>
+      <td>${matches.participant.name }</td>
       <td><fmt:formatDate value="${matches.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-      <td>${matches.score1 }</td><td>${matches.score2 }</td><td>${matches.score3 }</td>
+      <td>${matches.score1 }
+      	<c:if test="${curUser.reviewlv == 1 }">&nbsp;&nbsp;<a href="${webRoot}/manager/matches/score?id=${matches.id }">评分</a></c:if>
+      </td><td>${matches.score2 }
+      	<c:if test="${curUser.reviewlv == 2 }">&nbsp;&nbsp;<a href="${webRoot}/manager/matches/score?id=${matches.id }">评分</a></c:if>
+      </td><td>${matches.score3 }
+      	<c:if test="${curUser.reviewlv == 3 }">&nbsp;&nbsp;<a href="${webRoot}/manager/matches/score?id=${matches.id }">评分</a></c:if>
+      </td>
     </tr>
     </c:forEach>
   </tbody>
 </table>
+
+<a href="${webRoot }/manager/competition/scorelist?id=${result.competition.id }" class="layui-btn">返回列表</a>
  </div>
  </div>
 </body>

@@ -84,13 +84,17 @@
   <colgroup>
   	<col width="50">
   	<col>
-    <col width="200">
+  	<col width="100">
+  	<col width="100">
+    <col width="100">
     <col width="100">
   </colgroup>
   <thead>
     <tr>
       <th>#</th>
       <th>竞赛通知</th>
+      <th>报名时间</th>
+      <th>竞赛时间</th>
       <th>创建时间</th>
       <th>审核状态</th>
     </tr> 
@@ -100,6 +104,11 @@
     <tr>
       <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${competition.id }"></td>
       <td>${competition.title }</td>
+      <td><fmt:formatDate value="${competition.enrollStartTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.enrollEndTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+      </td>
+      <td><fmt:formatDate value="${competition.startTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.endTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
       <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
       <td><academic:checkStep step="${competition.checkStep }"/></td>
     </tr>

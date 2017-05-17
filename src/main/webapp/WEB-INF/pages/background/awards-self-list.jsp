@@ -72,8 +72,9 @@
   			</table>
   	</div>
 
-	<div class="main">
-	  <div class="layui-btn-group" style="float:right;margin-bottom:10px;">
+	<div class="main" style="padding:20px">
+	  <div class="layui-btn-group" style="margin-bottom:10px;">
+	  	<button class="layui-btn layui-btn-primary" id="add">新增&nbsp;<i class="layui-icon">&#xe654;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="update">编辑&nbsp;<i class="layui-icon">&#xe642;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="delete">删除&nbsp;<i class="layui-icon">&#xe640;</i></button>
 	  </div>
@@ -82,7 +83,8 @@
 	<table class="layui-table" lay-skin="line">
   <colgroup>
   	<col width="50">
-    <col width="800">
+    <col>
+    <col width="100">
   </colgroup>
   <thead>
     <tr>
@@ -95,6 +97,7 @@
     <tr>
       <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${awards.id }"></td>
       <td><a href="${webRoot}/manager/awards/detail?id=${awards.id }">${awards.title }</a></td>
+      <td>${awards.createTime }</td>
     </tr>
     </c:forEach>
   </tbody>
@@ -112,6 +115,11 @@ layui.use(['form','layer','jquery','element'], function(){
   var layer = layui.layer;
   var element = layui.element();
   
+	//添加按钮
+	$("#add").click(function(){
+		$(location).prop("href","${webRoot}/manager/awards/add");
+	});
+	
 	$("#update").click(function(){
 		var $chk = $("[name = 'ids[]']:checkbox");
 		if($chk.filter(":checked").length > 1){
@@ -121,7 +129,7 @@ layui.use(['form','layer','jquery','element'], function(){
 			layer.msg("请选择一项!");
 			return;
 		}
-		$(location).prop("href","${webRoot}/awards/update?id="+$chk.filter(":checked").val());
+		$(location).prop("href","${webRoot}/manager/awards/update?id="+$chk.filter(":checked").val());
 	});
 	
 	$("#delete").click(function(){
@@ -131,7 +139,7 @@ layui.use(['form','layer','jquery','element'], function(){
 			return;
 		}
 		
-		$("form[class='layui-form']").prop("action","${webRoot}/awards/delete");
+		$("form[class='layui-form']").prop("action","${webRoot}/manager/awards/delete");
 		$("form[class='layui-form']").submit();
 	});
   

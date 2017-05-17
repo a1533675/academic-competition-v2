@@ -317,7 +317,7 @@ public class BgCompetitionController {
 	 */
 	@RequestMapping(value="/update",method={RequestMethod.POST})
 	public ModelAndView update(@RequestParam("attachment") MultipartFile file,@ModelAttribute Competition competition){
-		ModelAndView mv = new ModelAndView(Const.RESULT);
+		ModelAndView mv = new ModelAndView(Const.BG_RESULT);
 		if(null != file && file.getSize() > 0){
 			String originName = file.getOriginalFilename();
 			String ext = originName.substring(originName.indexOf("."));
@@ -331,6 +331,7 @@ public class BgCompetitionController {
 			
 		}
 		competitionDao.update(competition);
+		
 		mv.addObject(Const.RESULT, "竞赛项目更新成功!");
 		
 		mv.addObject(Const.NAVS,new String[]{"项目管理","项目申请"});

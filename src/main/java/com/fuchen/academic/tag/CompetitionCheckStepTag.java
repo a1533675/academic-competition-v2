@@ -30,6 +30,9 @@ public class CompetitionCheckStepTag extends SimpleTagSupport {
 		String result = "";
 		if(null != step){
 			switch (step) {
+			case -1:
+				result="审核拒绝";
+				break;
 			case 0:
 				result="待审";
 				break;

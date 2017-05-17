@@ -44,7 +44,7 @@
 	 </style>
 </head>
 <body>
-<div class="schoollogo">
+	<div class="schoollogo">
   		<h4>合作院校</h4>
   			<table>
   				<tr>
@@ -63,43 +63,6 @@
   			</table>
   	</div>
   	<div class="main">
-<table class="layui-table" lay-skin="line">
-  <colgroup>
-    <col width="800">
-    <col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>最新公告 <a href="${webRoot }/notice/queryByPage" style="font-weight: normal;display: inline;float: right;">更多 &gt;&gt;</a></th>
-    </tr> 
-  </thead>
-  <tbody>
-    <c:forEach var="notice" items="${noticeList }">
-    <tr>
-      <td><a href="${webRoot}/notice/detail?id=${notice.id }">${notice.title }</a></td>
-    </tr>
-    </c:forEach>
-  </tbody>
-</table>  
-
-<table class="layui-table" lay-skin="line">
-  <colgroup>
-    <col width="800">
-    <col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>最新话题 <a href="${webRoot }/topic/queryByPage" style="font-weight: normal;display: inline;float: right;">更多 &gt;&gt;</a></th>
-    </tr> 
-  </thead>
-  <tbody>
-    <c:forEach var="topic" items="${topicList }">
-    <tr>
-      <td><a href="${webRoot}/topic/detail?id=${topic.id }">${topic.title }</a></td>
-    </tr>
-    </c:forEach>
-  </tbody>
-</table>  
-</div>
+	</div>
 </body>
 </html>

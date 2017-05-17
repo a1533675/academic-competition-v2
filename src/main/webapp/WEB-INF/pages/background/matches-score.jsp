@@ -36,7 +36,10 @@
 	</span>
 	</div>
 	<div style="padding:15px;">
+		<blockquote class="layui-elem-quote">竞赛项目:${result.competition.title }</blockquote>
+		
 		<blockquote class="layui-elem-quote layui-quote-nm">
+			提交内容:<br/>
 			${result.content }
 		</blockquote>
 		<hr>
@@ -44,9 +47,27 @@
 		<c:if test="${not empty result.attachmentUrl }">
 		<p><a href="${webRoot }/manager/competition/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
 		</c:if>
-		<div class="layui-form-item" style="text-align: center;">
-	      <a href="${webRoot }/manager/matches/list?id=${result.competition.id }" class="layui-btn">返回列表</a>
-  		</div>
+		
+		<div style="margin-top:2em">
+			<form class="layui-form layui-form-pane" action="${webRoot }/manager/matches/score" method="post">
+				<input type="hidden" name="id" value="${result.id }"/>
+				<input type="hidden" name="competition.id" value="${result.competition.id }"/>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">分数</label>
+				    <div class="layui-input-inline">
+				      <input name="score${curUser.reviewlv }" lay-verify="required|number" placeholder="请输入1-100的整数" autocomplete="off" class="layui-input" type="text">
+				    </div>
+			  </div>
+			 <div class="layui-form-item">
+			    <div>
+			      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+			      <a href="${webRoot }/manager/matches/list?id=${result.competition.id }" class="layui-btn">返回列表</a>
+			    </div>
+		  	</div> 
+			  
+			</form>
+		</div>
+		
 	</div>
 	
  </div>

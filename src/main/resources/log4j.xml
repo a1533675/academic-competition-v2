@@ -46,7 +46,7 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	<root>
-		<priority value="DEBUG" />
+		<priority value="WARN" />
 		<appender-ref ref="ERROR" />
 		<appender-ref ref="STDOUT" />
 	</root>

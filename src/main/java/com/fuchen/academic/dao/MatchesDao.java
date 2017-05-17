@@ -10,4 +10,6 @@ public interface MatchesDao extends BaseDao<Matches> {
 	public Matches queryByUC(Map<String,Object> params);
 	
 	public List<Matches> queryByCompetition(Map<String,Object> params);
+	
+	public List<Matches> queryByUser(Map<String,Object> params);
 }

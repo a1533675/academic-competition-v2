@@ -111,7 +111,10 @@
 	</update>
 	
 	<select id="queryCanJoinList" parameterType="java.util.Map" resultMap="Competition" >
-		select <include refid="select_includes"/> from competition <include refid="join"/> where current_timestamp() between enrollStartTime and enrollEndTime;  
+		select <include refid="select_includes"/> from competition <include refid="join"/> where checkStep=#{checkStep} and current_timestamp() between enrollStartTime and enrollEndTime;  
 	</select>
 	
+	<select id="queryHistoryList" parameterType="java.util.Map" resultMap="Competition" >
+		select <include refid="select_includes"/> from competition <include refid="join"/> where checkStep=#{checkStep} and current_timestamp() > endTime ;
+	</select>
 </mapper>

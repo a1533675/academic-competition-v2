@@ -116,6 +116,12 @@ layui.use(['form','layer','jquery','element'], function(){
   var element = layui.element();
 	//添加按钮
 	$("#update").click(function(){
+		var rightLv = ${curUser.reviewlv};//用户已有的权限
+		
+		if(rightLv == 0){
+			layer.msg("您没有权限进行评分!");
+			return ;
+		}
 		
 		var $chk = $("[name = 'ids[]']:checkbox");
 		if($chk.filter(":checked").length > 1){

@@ -92,9 +92,9 @@ public class BgAwardsNoticeController {
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
 		
-		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
+//		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
 		
-		condition.put("number", self.getNumber());
+//		condition.put("number", self.getNumber());
 		
 		Integer total = awardsNoticeDao.count(condition);
 		
@@ -166,6 +166,22 @@ public class BgAwardsNoticeController {
 		awardsNoticeDao.update(awardsNotice);
 		mv.addObject(Const.NAVS,new String[]{"通知公告","获奖通知"});
 		mv.addObject(Const.RESULT, "获奖通知更新成功!");
+		mv.addObject(Const.RETURN_URL, "querySelfByPage");
+		return mv;
+	}
+	
+	
+	/**
+	 * 删除
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(value="/delete")
+	public ModelAndView delete(@RequestParam(value="ids[]") String[] ids){
+		ModelAndView mv = new ModelAndView(Const.BG_RESULT);
+		awardsNoticeDao.batchDelete(ids);
+		mv.addObject(Const.NAVS,new String[]{"通知公告","获奖通知"});
+		mv.addObject(Const.RESULT, "获奖通知批量删除成功!");
 		mv.addObject(Const.RETURN_URL, "querySelfByPage");
 		return mv;
 	}

@@ -12,37 +12,39 @@ import org.ysh.springmvc.base.util.StringUtil;
 import org.ysh.springmvc.base.vo.Pagination;
 
 import com.fuchen.academic.constants.Const;
-import com.fuchen.academic.dao.CompetitionDao;
-import com.fuchen.academic.domain.Competition;
+import com.fuchen.academic.dao.AwardsNoticeDao;
+import com.fuchen.academic.domain.AwardsNotice;
 
-/**
- * 前台的框架跳转控制器
- */
 @Controller
-public class FrontFrameController {
-
-	@Autowired
-	private CompetitionDao competitionDao;
+@RequestMapping("/front/awards")
+public class FrontAwardsNoticeController {
 	
-	@RequestMapping("/index.html")
-	public ModelAndView indexHtml(String page){
+	@Autowired
+	private AwardsNoticeDao awardsNoticeDao;
+	/**
+	 * 分页查询
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/queryByPage")
+	public ModelAndView queryByPage(String page){
 		Integer curPage = 1;
 		if(StringUtil.isNotEmpty(page)){
 			curPage = Integer.parseInt(page);
 		}
 		
-		Integer total = competitionDao.count(null);
+		Integer total = awardsNoticeDao.count(null);
 		
-		Pagination<Competition> pagination = new Pagination<Competition>(curPage, total);
+		Pagination<AwardsNotice> pagination = new Pagination<AwardsNotice>(curPage, total);
 		
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("start", (curPage-1)*pagination.getPageSize());
 		params.put("pageSize", pagination.getPageSize());
-		params.put("checkStep", Const.CHECK_STEP_THIRD);
-		List<Competition> pageList = competitionDao.queryByPage(params);
+		
+		List<AwardsNotice> pageList = awardsNoticeDao.queryByPage(params);
 		pagination.setItems(pageList);
 		
-		ModelAndView mv = new ModelAndView("front/index");
+		ModelAndView mv = new ModelAndView("awards-list");
 		mv.addObject(Const.PAGINATION, pagination);
 		
 		return mv;

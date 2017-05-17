@@ -11,12 +11,19 @@
 	 <link rel="stylesheet" href="${webRoot }/layui/css/layui.css"  media="all">
   </head>
   <body>
-  
+    <div style="padding-left:10px;background-color: #FBFBFB;line-height:2;">
+		<i class="layui-icon">&#xe632;</i>
+		<span class="layui-breadcrumb">
+		  <a><cite>首页</cite></a>
+		  <a><cite>通知公告</cite></a>
+		  <a><cite>获奖通知</cite></a>
+		</span>
+		</div>
   <div style="max-width:800px;margin:auto;">
   	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 	  <legend>获奖通知</legend>
 	</fieldset>
- 	<form name="competition-form" class="layui-form" action="${webRoot }/awards/update" method="POST" enctype="multipart/form-data">
+ 	<form name="competition-form" class="layui-form" action="${webRoot }/manager/awards/update" method="POST" enctype="multipart/form-data">
  	<input type="hidden" value="${result.id }" name="id"/>
  	<div class="layui-form-item">
     	<label class="layui-form-label">主题</label>
@@ -42,7 +49,7 @@
   	<div class="layui-form-item">
 	    <div class="layui-input-block">
 	      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-	      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	      <a href="${webRoot }/manager/awards/querySelfByPage" class="layui-btn">返回列表</a>
 	    </div>
   	</div>
 	<div class="layui-form-item">
@@ -55,9 +62,9 @@
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
-layui.use(['form','laydate','layedit','upload'], function(){
+layui.use(['form','laydate','layedit','upload','element'], function(){
   var form = layui.form()
-  ,layer = layui.layer, laydate = layui.laydate,layedit=layui.layedit;
+  ,layer = layui.layer, laydate = layui.laydate,layedit=layui.layedit,element=layui.element();
   //自定义验证规则
   form.verify({
   });
