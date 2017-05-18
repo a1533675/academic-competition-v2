@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -84,12 +85,14 @@
 	<table class="layui-table" lay-skin="line">
   <colgroup>
   	<col width="50">
-    <col width="800">
+    <col>
+    <col width="180">
   </colgroup>
   <thead>
     <tr>
       <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
       <th>系统公告</th>
+      <th>&nbsp;</th>
     </tr> 
   </thead>
   <tbody>
@@ -97,6 +100,7 @@
     <tr>
       <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${notice.id }"></td>
       <td><a href="${webRoot}/manager/notice/detail?id=${notice.id }">${notice.title }</a></td>
+      <td><fmt:formatDate value="${notice.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
     </tr>
     </c:forEach>
   </tbody>

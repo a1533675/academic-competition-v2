@@ -347,9 +347,10 @@ public class BgCompetitionController {
 	 */
 	@RequestMapping(value="/delete")
 	public ModelAndView delete(@RequestParam(value="ids[]") String[] ids){
-		ModelAndView mv = new ModelAndView(Const.RESULT);
+		ModelAndView mv = new ModelAndView(Const.BG_RESULT);
 		competitionDao.batchDelete(ids);
 		mv.addObject(Const.RESULT, "竞赛项目批量删除成功!");
+		mv.addObject(Const.NAVS,new String[]{"项目管理","项目申请"});
 		mv.addObject(Const.RETURN_URL, "querySelfByPage");
 		return mv;
 	}

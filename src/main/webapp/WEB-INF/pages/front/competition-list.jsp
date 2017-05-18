@@ -9,7 +9,6 @@
 	 <meta name="renderer" content="webkit">
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	 <link rel="stylesheet" href="${webRoot }/layui/css/bootstrap.css"  media="all">
 	 <link rel="stylesheet" href="${webRoot }/layui/css/layui.css"  media="all">
 	 <style>
 	 </style>
@@ -27,19 +26,30 @@
     
     <table class="layui-table" lay-skin="line">
 	  <colgroup>
-	    <col width="800">
 	    <col>
+	    <col>
+	    <col>
+	    <col width="100">
 	  </colgroup>
 	  <thead>
 	    <tr>
-	      <th colspan="2">竞赛报名</th>
+	      <th>竞赛报名</th>
+	      <th>报名时间</th>
+      	  <th>竞赛时间</th>
+      	  <th>#</th>
 	    </tr> 
 	  </thead>
 	  <tbody>
 		<c:forEach var="competition" items="${canList }">
 	    <tr>
 	      <td><a href="${webRoot}/front/competition/detail?id=${competition.id }&returnUrl=${webRoot }/front/competition/queryByPage">${competition.title }</a></td>
-	      <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd"/></td>
+		  <td><fmt:formatDate value="${competition.enrollStartTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+	      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.enrollEndTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+	      </td>
+	      <td><fmt:formatDate value="${competition.startTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.endTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+      		<td><button class="layui-btn layui-btn-small" onclick="join('${competition.id }')">报名</button></td>
+      	
 	    </tr>
 	    </c:forEach>
 	  </tbody>
@@ -48,19 +58,26 @@
     <div class="layui-tab-item">
 	<table class="layui-table" lay-skin="line">
 	  <colgroup>
-	    <col width="800">
+	    <col>
+	    <col>
 	    <col>
 	  </colgroup>
 	  <thead>
 	    <tr>
-	      <th colspan="2">往期项目</th>
+	      <th>往期项目</th>
+	      <th>报名时间</th>
+      	  <th>竞赛时间</th>
 	    </tr> 
 	  </thead>
 	  <tbody>
 		<c:forEach var="competition" items="${historyList }">
 	    <tr>
 	      <td><a href="${webRoot}/front/competition/detail?id=${competition.id }&returnUrl=${webRoot }/front/competition/queryByPage">${competition.title }</a></td>
-	      <td><fmt:formatDate value="${competition.createTime }" type="both" pattern="yyyy-MM-dd"/></td>
+	      <td><fmt:formatDate value="${competition.enrollStartTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+	      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.enrollEndTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+	      </td>
+	      <td><fmt:formatDate value="${competition.startTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
+      &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${competition.endTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	    </tr>
 	    </c:forEach>
 	  </tbody>
@@ -75,6 +92,30 @@
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
+
+function join(id){
+	console.log(id);
+	layui.use(['form','layer','jquery','element'], function(){
+		  var form = layui.form();
+		  var $ = layui.jquery;
+		  var layer = layui.layer;
+		  var element = layui.element();
+		  
+		  layer.confirm('确认报名？', {
+			  btn: ['报名', '取消'] //可以无限个按钮
+		  }, function(index, layero){
+			  $.post('${webRoot}/front/competition/join',{'id':id},function(data,status){
+				  layer.close(index);
+				  layer.msg(data.msg);
+				  
+			  });
+		  }, function(index){
+		  });
+		  
+	});
+}
+
+
 layui.use(['form','element'], function(){
   var form = layui.form(),element = layui.element();
   

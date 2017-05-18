@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -84,12 +85,13 @@
   <colgroup>
   	<col width="50">
     <col>
-    <col width="100">
+    <col width="180">
   </colgroup>
   <thead>
     <tr>
       <th><input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox"></th>
       <th>获奖通知</th>
+      <th>&nbsp;</th>
     </tr> 
   </thead>
   <tbody>
@@ -97,7 +99,7 @@
     <tr>
       <td><input lay-skin="primary" type="checkbox" name = "ids[]" value="${awards.id }"></td>
       <td><a href="${webRoot}/manager/awards/detail?id=${awards.id }">${awards.title }</a></td>
-      <td>${awards.createTime }</td>
+      <td><fmt:formatDate value="${awards.createTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
     </tr>
     </c:forEach>
   </tbody>

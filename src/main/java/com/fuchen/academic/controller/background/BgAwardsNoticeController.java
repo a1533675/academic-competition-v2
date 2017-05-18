@@ -92,10 +92,6 @@ public class BgAwardsNoticeController {
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
 		
-//		Users self = (Users) session.getAttribute(Const.CURRENT_USER);
-		
-//		condition.put("number", self.getNumber());
-		
 		Integer total = awardsNoticeDao.count(condition);
 		
 		Pagination<AwardsNotice> pagination = new Pagination<AwardsNotice>(curPage, total);
