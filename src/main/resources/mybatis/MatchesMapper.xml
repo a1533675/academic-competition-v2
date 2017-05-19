@@ -20,12 +20,14 @@
 			<result property="content" column="ccontent"/>
 			<result property="startTime" column="startTime"/>
 			<result property="endTime" column="endTime"/>
+			<result property="enrollStartTime" column="enrollStartTime"/>
+			<result property="enrollEndTime" column="enrollEndTime"/>
 			<result property="createTime" column="ccreateTime"/>
 		</association>
 	</resultMap>
 	
 	<sql id="select_includes">
-		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id as cid,c.title,c.content as ccontent,c.startTime,c.endTime,c.createTime as ccreateTime,score1,score2,score3
+		m.id,m.content,m.attachmentUrl,m.createTime,p.number,p.name,c.id as cid,c.title,c.content as ccontent,c.startTime,c.endTime,c.createTime as ccreateTime,enrollStartTime,enrollEndTime,score1,score2,score3
 	</sql>
 	
 	<sql id="insert_includes">
@@ -88,9 +90,24 @@
 		select <include refid="select_includes"/> from matches m <include refid="join"/> <include refid="dynamicWhere"/> 
 	</select>
 	
-	<select id="queryByUser" resultMap="Matches">
-		select <include refid="select_includes"/> from matches m <include refid="join"/> <include refid="dynamicWhere"/> 
+	<!-- 查询出用户已经报名但尚未开始的比赛 -->
+	<select id="queryByUserEnroll" resultMap="Matches">
+		select <include refid="select_includes"/> from matches m <include refid="join"/> 
+		where  p.number = #{number} and now() between c.enrollStartTime and c.enrollEndTime
 	</select>
+	
+	<!-- 查询出正在进行中的比赛 -->
+	<select id="queryByUserJoin" resultMap="Matches">
+		select <include refid="select_includes"/> from matches m <include refid="join"/> 
+		where  p.number = #{number} and now() between c.startTime and c.endTime
+	</select>
+	
+	<!-- 查询出用户报名且已经结束的比赛 -->
+	<select id="queryByUserHistory" resultMap="Matches">
+		select <include refid="select_includes"/> from matches m <include refid="join"/> 
+		where  p.number = #{number} and now() > c.endTime
+	</select>
+	
 	
 	<select id="queryByCompetition" resultMap="Matches">
 		select <include refid="select_includes"/> from matches m <include refid="join"/> <include refid="dynamicWhere"/> 

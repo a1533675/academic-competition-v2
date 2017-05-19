@@ -62,6 +62,7 @@ public class FrontCompetitionController {
 		return mv;
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping(value="/join")
 	public ResponseMsg join(String id,HttpSession session){
@@ -73,9 +74,10 @@ public class FrontCompetitionController {
 		param.put("number", curUser.getNumber());
 		
 		Matches queryByUC = matchesDao.queryByUC(param);
-		if(null == queryByUC || !StringUtil.isNotEmpty(queryByUC.getId())){
+		if(null != queryByUC && StringUtil.isNotEmpty(queryByUC.getId())){
 			msg.setCode(-1);
 			msg.setMsg("竞赛不能重复报名!");
+			return msg;
 		}
 		
 		Matches matches = new Matches();
