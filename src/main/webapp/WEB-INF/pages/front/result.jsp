@@ -22,7 +22,7 @@ html,body{
 		<jsp:include page="head.jsp"/>
 
   		<div style="text-align:center;margin-top:25px;">
-  			<h3>${result }</h3>
+  			<h3><i class="layui-icon">&#xe60b;</i> &nbsp;${result }</h3>
   		</div>
   		<div style="text-align:center;margin-bottom:50px;">
   			<c:if test="${not empty continueUrl}"><a class="layui-btn layui-btn-normal" href="${continueUrl }" >继续</a>&nbsp;&nbsp;</c:if>

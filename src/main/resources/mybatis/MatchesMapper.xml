@@ -63,7 +63,13 @@
 				score2 = #{score2},
 			</if>
 			<if test="score3 != null">
-				score3 = #{score3}
+				score3 = #{score3},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="attachmentUrl != null">
+				attachmentUrl = #{attachmentUrl},
 			</if>
 		</trim>
 			where id=#{id}

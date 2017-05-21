@@ -80,7 +80,7 @@
 	      </td>
 	      <td><fmt:formatDate value="${matches.competition.startTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
       &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${matches.competition.endTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-      		<td><a class="layui-btn layui-btn-small" href="${webRoot }/front/matches/add?id=${matches.competition.id }">进入比赛</a></td>
+      		<td><a class="layui-btn layui-btn-small" href="${webRoot }/front/matches/add?id=${matches.id }">进入比赛</a></td>
 	    </tr>
 	    </c:forEach>
 	  </tbody>
@@ -112,7 +112,7 @@
 	      <td><fmt:formatDate value="${matches.competition.startTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
       &nbsp;&nbsp; - &nbsp;&nbsp; <fmt:formatDate value="${matches.competition.endTime }" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
       		<td><c:if test="${not empty matches.score1 and not empty matches.score2 and not empty matches.score3 }">
-      			${(score1 + score2 + score3)/3 }
+      			${(matches.score1 + matches.score2 + matches.score3)/3 }
       		</c:if>
       		<c:if test="${empty matches.score1 or empty matches.score2 or empty matches.score3  }">尚未评分</c:if>
       		</td>

@@ -19,9 +19,7 @@ import org.ysh.springmvc.base.util.ResourcesUtil;
 import org.ysh.springmvc.base.util.StringUtil;
 
 import com.fuchen.academic.constants.Const;
-import com.fuchen.academic.dao.CompetitionDao;
 import com.fuchen.academic.dao.MatchesDao;
-import com.fuchen.academic.domain.Competition;
 import com.fuchen.academic.domain.Matches;
 import com.fuchen.academic.domain.Users;
 
@@ -33,9 +31,6 @@ public class FrontMatchesController {
 	
 	@Autowired
 	private MatchesDao matchesDao;
-	
-	@Autowired
-	private CompetitionDao competitionDao;
 	
 	/**
 	 * 查询出用户所报名的竞赛项目
@@ -55,8 +50,8 @@ public class FrontMatchesController {
 		Users curUser = (Users) session.getAttribute(Const.CURRENT_USER);
 		params.put("number", curUser.getNumber());
 		mv.addObject("enrollList",matchesDao.queryByUserEnroll(params));
-		mv.addObject("joinList",matchesDao.queryByUserEnroll(params));
-		mv.addObject("historyList",matchesDao.queryByUserEnroll(params));
+		mv.addObject("joinList",matchesDao.queryByUserJoin(params));
+		mv.addObject("historyList",matchesDao.queryByUserHistory(params));
 		return mv;
 	}
 	
@@ -68,8 +63,8 @@ public class FrontMatchesController {
 	@RequestMapping(value="/add",method={RequestMethod.GET})
 	public ModelAndView add(String id,HttpSession session){
 		ModelAndView mv= new ModelAndView("front/matches-add");
-		Competition competition = competitionDao.queryById(id);
-		mv.addObject(Const.RESULT, competition);
+		Matches matches = matchesDao.queryById(id);
+		mv.addObject(Const.RESULT, matches);
 		return mv;
 	}
 	
@@ -97,7 +92,7 @@ public class FrontMatchesController {
 				LOG.error("文件上传异常",e);
 			} 
 		}
-		matchesDao.add(matches);
+		matchesDao.update(matches);
 		mv.addObject(Const.RESULT, "竞赛结果提交成功!");
 		mv.addObject(Const.RETURN_URL, "matchesList");
 		return mv;
