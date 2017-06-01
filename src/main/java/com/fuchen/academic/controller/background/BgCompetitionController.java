@@ -258,9 +258,13 @@ public class BgCompetitionController {
 		//项目发布
 		res.addObject(Const.RESULT, "竞赛项目审核成功!");
 		res.addObject(Const.NAVS,new String[]{"项目管理","项目审核"});
-		
+		if(competition.getCheckStep() == 3){
+			res.addObject(Const.RETURN_URL, "passlist");
+		}else{
+			res.addObject(Const.RETURN_URL, "checklist?checkStep="+initStep);
+		}
 		//返回分页
-		res.addObject(Const.RETURN_URL, "checklist?checkStep="+initStep);
+		
 		return res;
 	}
 	

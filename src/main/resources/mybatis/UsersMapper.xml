@@ -15,7 +15,7 @@
 	</sql>
 	
 	<insert id="add">
-		insert into users(<include refid="includes"/>) values(#{number},#{password},#{name},#{type},#{tel},#{email});
+		insert into users(<include refid="includes"/>) values(#{number},#{password},#{name},#{type},#{tel},#{email},#{reviewlv});
 	</insert>
 	
 	<select id="validate" resultType="com.fuchen.academic.domain.Users">

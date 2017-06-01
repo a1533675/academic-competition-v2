@@ -77,7 +77,7 @@
 	  	<div class="layui-form-item">
 		    <label class="layui-form-label">审核结果</label>
 		    <div class="layui-input-block">
-		      <input name="checkStep" value="${result.checkStep + 1 }" title="通过" checked="checked" type="radio">
+		      <input name="checkStep" value="${curUser.reviewlv }" title="通过" checked="checked" type="radio">
 		      <input name="checkStep" value="-1" title="拒绝" type="radio">
 		    </div>
 	  </div>

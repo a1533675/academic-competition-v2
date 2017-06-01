@@ -146,7 +146,7 @@ layui.use(['form','layer','jquery','element'], function(){
 			layer.msg("请选择一项!");
 			return;
 		}
-		$(location).prop("href","${webRoot}/manager/matches/list?id="+$chk.filter(":checked").val());
+		$(location).prop("href","${webRoot}/manager/competition/initCheck?id="+$chk.filter(":checked").val());
 	});
 	
   //监听提交

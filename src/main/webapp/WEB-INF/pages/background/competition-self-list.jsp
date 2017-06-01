@@ -79,6 +79,9 @@
 	    <button class="layui-btn layui-btn-primary" id="add">新增&nbsp;<i class="layui-icon">&#xe654;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="update">编辑&nbsp;<i class="layui-icon">&#xe642;</i></button>
 	    <button class="layui-btn layui-btn-primary" id="delete">删除&nbsp;<i class="layui-icon">&#xe640;</i></button>
+	    <c:if test="${curUser.reviewlv == 3 }">
+	    	<button class="layui-btn layui-btn-primary" id="check">审核&nbsp;<i class="layui-icon">&#xe618;</i></button>
+	    </c:if>
 	  </div>
 	  
  <form action="" method="post" class="layui-form">
@@ -131,6 +134,11 @@ layui.use(['form','layer','jquery','element'], function(){
   
 	//添加按钮
 	$("#add").click(function(){
+		var reviewLv = ${curUser.reviewlv};
+		if(reviewLv == 1){
+			layer.msg("您没有权限发布项目!");
+			return;
+		}
 		$(location).prop("href","${webRoot}/manager/competition/add");
 	});
 	
@@ -145,6 +153,25 @@ layui.use(['form','layer','jquery','element'], function(){
 		}
 		$(location).prop("href","${webRoot}/manager/competition/update?id="+$chk.filter(":checked").val());
 	});
+	
+	$("#check").click(function(){
+		var reviewLv = ${curUser.reviewlv};
+		//添加按钮
+		if(reviewLv != 3){
+			layer.msg("您没有权限审核此项目!");
+			return ;
+		}
+		
+		var $chk = $("[name = 'ids[]']:checkbox");
+		if($chk.filter(":checked").length > 1){
+			layer.msg("只能选择一项!");
+			return;
+		}else if($chk.filter(":checked").length < 1){
+			layer.msg("请选择一项!");
+			return;
+		}
+		$(location).prop("href","${webRoot}/manager/competition/initCheck?id="+$chk.filter(":checked").val());
+	})
 	
 	$("#delete").click(function(){
 		var $chk = $("[name = 'ids[]']:checkbox");

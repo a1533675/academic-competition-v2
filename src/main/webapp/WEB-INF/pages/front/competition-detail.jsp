@@ -57,6 +57,8 @@
 		<p><a href="${webRoot }/competition/download?filename=${result.attachmentUrl }"><i class="layui-icon">&#xe61e;</i> ${result.attachmentUrl }</a></p>
 		
 		<div class="layui-form-item" style="text-align: center;">
+		
+		  <button class="layui-btn" onclick="join('${result.id }')">报名参赛</button>
 	      <a href="${param.returnUrl }" class="layui-btn">返回</a>
   		</div>
 	</div>
@@ -66,6 +68,30 @@
 </body>
 <script src="${webRoot }/layui/layui.js" charset="utf-8"></script>
 <script>
+
+function join(id){
+	console.log(id);
+	layui.use(['form','layer','jquery','element'], function(){
+		  var form = layui.form();
+		  var $ = layui.jquery;
+		  var layer = layui.layer;
+		  var element = layui.element();
+		  
+		  layer.confirm('确认报名？', {
+			  btn: ['报名', '取消'] //可以无限个按钮
+		  }, function(index, layero){
+			  $.post('${webRoot}/front/competition/join',{'id':id},function(data,status){
+				  layer.close(index);
+				  layer.msg(data.msg);
+				  
+			  });
+		  }, function(index){
+		  });
+		  
+	});
+}
+
+
 layui.use(['form'], function(){
   var form = layui.form();
   

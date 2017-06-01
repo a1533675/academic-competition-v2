@@ -68,6 +68,6 @@ public class BgLoginController {
 	public String loginout(HttpSession session){
 		//销毁会话信息
 		session.invalidate();
-		return "redirect:/manager/login";
+		return "redirect:/index.html";
 	}
 }
